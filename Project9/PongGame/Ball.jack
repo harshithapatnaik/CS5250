@@ -1,0 +1,74 @@
+class Ball {
+    field int x, y, dx, dy;
+
+    constructor Ball new(int initX, int initY, int deltaX, int deltaY) {
+        let x = initX;
+        let y = initY;
+        let dx = deltaX;
+        let dy = deltaY;
+        do draw();
+        return this;
+    }
+
+    method void move() {
+        do erase();
+
+        let x = x + dx;
+        let y = y + dy;
+
+        // Clamp X bounds and reverse dx if needed
+        if (x < 0) {
+            let x = 0;
+            let dx = 0 - dx;
+        }
+        if (x + 2 > 511) {
+            let x = 509;
+            let dx = 0 - dx;
+        }
+
+        // Clamp Y bounds and reverse dy if needed
+        if (y < 0) {
+            let y = 0;
+            let dy = 0 - dy;
+        }
+        if (y + 2 > 255) {
+            let y = 253;
+            let dy = 0 - dy;
+        }
+
+        do draw();
+        return;
+    }
+
+    
+    method boolean bounceIfNeeded(Paddle paddle) {
+        var int px, py;
+
+        let px = paddle.getX();
+        let py = paddle.getY();
+
+        if (~((y + 2) < py) & ~(x < px) & (x < (px + 21))) {
+            let dy = 0 - dy;
+            return true;
+        }
+
+        return false;
+    }
+
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + 2, y + 2);
+        return;
+    }
+
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x + 2, y + 2);
+        return;
+    }
+    
+    method int getY() {
+        return y;
+    }
+
+}

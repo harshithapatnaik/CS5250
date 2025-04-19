@@ -1,0 +1,46 @@
+class Pong {
+    field Paddle paddle;
+    field Ball ball;
+    field int score;
+
+    constructor Pong new() {
+        let paddle = Paddle.new(200, 230);   // x, y position
+        let ball = Ball.new(220, 200, 2, -2); // x = 220, y = 220, moving upward
+        return this;
+    }
+
+    method void run() {
+        var boolean continue;
+        let continue = true;
+
+        while (continue) {
+            do paddle.move();
+            do ball.move();
+            if (ball.bounceIfNeeded(paddle)) {
+                let score = score + 1;
+            }
+            // do ball.bounceIfNeeded(paddle);
+            if (~(ball.getY() + 2 < 255)) {                
+                do Output.printString("Game Over");
+                do Output.println();
+                do Output.printString("Score: ");
+                do Output.printInt(score);
+                let continue = false;
+            }
+            do Sys.wait(10); // Slow down loop
+        }
+
+        return;
+    }
+
+
+    method void drawBlock(int x, int y) {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + 4, y + 4);
+        return;
+    }
+
+    method void dispose() {
+        return;
+    }
+}

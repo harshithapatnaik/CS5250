@@ -1,0 +1,14 @@
+class Main {
+    function void main() {
+        var Pong pong;
+        do Screen.clearScreen();
+        let pong = Pong.new();
+        do pong.run();
+        do pong.dispose();
+        return;
+    }
+
+    function void dispose() {
+        return;
+    }
+}
