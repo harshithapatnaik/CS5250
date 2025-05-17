@@ -1,0 +1,113 @@
+# Quantum Games Repository
+
+This repository contains two interactive quantum programs implemented in Python using Qiskit:
+
+* **Quantum Coin Toss** (`coin_toss.py`)
+* **Quantum Rock–Paper–Scissors** (`rock_paper_scissors.py`)
+
+Both scripts use true quantum randomness via Qiskit Aer (local simulator) and can be adapted to run on real IBM Quantum hardware.
+
+---
+
+## Prerequisites
+
+* Python 3.8–3.11
+* Qiskit (Terra, Aer)
+* Qiskit IBMQ or Qiskit IBM Provider (optional, for real-device runs)
+
+Install via pip:
+
+```bash
+pip install qiskit qiskit-aer qiskit-ibm-provider
+```
+
+Or via conda:
+
+```bash
+conda install -c conda-forge qiskit qiskit-aer qiskit-ibm-provider
+```
+
+## File Structure
+
+```
+README.md
+coin_toss.py
+rock_paper_scissors.py
+```
+
+* **coin\_toss.py**: Single-qubit Hadamard circuit that simulates a fair coin toss.
+* **rock\_paper\_scissors.py**: Two-qubit superposition circuit that selects Rock, Paper, or Scissors (rerolls on the extra state).
+
+## Usage
+
+### 1. Quantum Coin Toss
+
+Run the coin toss game:
+
+```bash
+python coin_toss.py
+```
+
+**Gameplay:**
+
+* You are prompted to guess heads (0) or tails (1).
+* The script runs a 1-qubit circuit with a Hadamard gate and measurement.
+* The outcome is printed and compared to your guess.
+
+**Example:**
+
+```
+🔮 Quantum Coin Toss Game 🔮
+Guess heads (0) or tails (1), or 'q' to quit: 0
+  The coin landed: 1 (tails)
+  😢 Sorry, wrong guess.
+```
+
+### 2. Quantum Rock–Paper–Scissors
+
+Run the Rock–Paper–Scissors game:
+
+```bash
+python rock_paper_scissors.py
+```
+
+**Gameplay:**
+
+* Enter your move: (r)ock, (p)aper, (s)cissors, or (q) to quit.
+* The script runs a 2-qubit circuit with two Hadamard gates and measurements.
+* Bit-strings map to moves: `00`→Rock, `01`→Paper, `10`→Scissors, `11`→reroll.
+* The winner is decided and printed.
+
+**Example:**
+
+```
+🔮 Quantum Rock–Paper–Scissors 🔮
+Your move: (r)ock, (p)aper, (s)cissors or q to quit: r
+Computer plays: scissors
+  🎉 You win!
+```
+
+## Running on Real Hardware (Optional)
+
+To run on an actual IBM Quantum device, first save your API token and load your account:
+
+```python
+from qiskit import IBMQ
+# Save your token once:
+# IBMQ.save_account('YOUR_API_TOKEN', overwrite=True)
+provider = IBMQ.load_account()
+backend = provider.get_backend('ibmq_quito')  # or any available backend
+```
+
+Then modify the simulator call in your script:
+
+```python
+# Instead of Aer simulator:
+# sim = Aer.get_backend('aer_simulator')
+
+# Use real backend:
+sim = backend
+job = sim.run(qc, shots=1)
+```
+
+
